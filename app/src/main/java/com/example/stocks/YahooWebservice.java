@@ -4,7 +4,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import rx.Single;
+import io.reactivex.Single;
 
 public interface YahooWebservice {
     @GET("/market/get-summary")

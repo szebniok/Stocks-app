@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.stocks.databinding.ActivityStockListBinding;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
 import org.androidannotations.annotations.DataBound;
 import org.androidannotations.annotations.EActivity;
@@ -20,6 +21,7 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_stock_list)
 public class StockListActivity extends AppCompatActivity {
 
+    @Bean
     private StockListViewModel stockListViewModel;
 
     @BindingObject
@@ -30,11 +32,11 @@ public class StockListActivity extends AppCompatActivity {
 
     @AfterViews
     void setBinding() {
-        binding.setIsLoading(true);
-        stockListViewModel = new ViewModelProvider(this).get(StockListViewModel.class);
+        binding.setViewmodel(stockListViewModel);
+        binding.setLifecycleOwner(this);
 
-        stockListViewModel.getStocks().observe(this, stocks -> {
-                    binding.setIsLoading(false);
+        stockListViewModel.getStocks();
+        stockListViewModel.stocks.observe(this, stocks -> {
                     text.setText(stocks.get(0).getShortName());
                 }
         );

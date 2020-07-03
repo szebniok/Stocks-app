@@ -4,11 +4,10 @@ import org.androidannotations.annotations.EBean;
 
 import java.util.List;
 
-import okhttp3.OkHttpClient;
+import io.reactivex.Single;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Single;
 
 @EBean
 public class StockMarketRepository {
