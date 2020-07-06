@@ -19,10 +19,10 @@ public class StockDetailsViewModel extends ViewModel {
     Disposable disposable;
 
     @Bean
-    StockMarketRepository repository;
+    StockMarketService service;
 
     public void getQuote(String symbol) {
-        disposable = repository.getQuote(symbol)
+        disposable = service.getQuote(symbol)
                 .doOnSubscribe(v -> loading.postValue(true))
                 .doAfterSuccess(v -> loading.postValue(false))
                 .doOnError(Throwable::printStackTrace)

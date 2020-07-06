@@ -17,10 +17,10 @@ public class StockSearchViewModel extends ViewModel {
     public MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
     @Bean
-    StockMarketRepository repository;
+    StockMarketService service;
 
     public void search(String name) {
-        repository.autoComplete(name)
+        service.autoComplete(name)
                 .doOnSubscribe(v -> loading.postValue(true))
                 .doAfterSuccess(v -> loading.postValue(false))
                 .subscribeOn(Schedulers.io())

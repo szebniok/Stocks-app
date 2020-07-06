@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import io.reactivex.Single;
 
 @EBean
-public class StockMarketRepository {
+public class StockMarketService {
     public Single<List<Stock>> getSummary() {
         return YahooApiProvider.yahooWebservice.getSummary(YahooApiProvider.YahooApiKey)
                 .map(result -> result.marketSummaryResponse.result.stream()

@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 @EBean
 public class StockListViewModel extends ViewModel {
     @Bean
-    StockMarketRepository stockMarketRepository;
+    StockMarketService stockMarketRepository;
     private Disposable disposable = new CompositeDisposable();
     public MutableLiveData<List<Stock>> stocks = new MutableLiveData<>();
     public MutableLiveData<Boolean> loading = new MutableLiveData<>();
