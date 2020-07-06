@@ -18,14 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Loading"
-            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.loading}"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text='@{"Symbol: " + viewModel.stock.symbol}'
-            android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            android:visibility="@{!viewModel.loading}"
             />
 
 
@@ -33,14 +33,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text='@{"Name: " + viewModel.stock.shortName}'
-            android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            android:visibility="@{!viewModel.loading}"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text='@{"Price: " + viewModel.stock.regularMarketPrice}'
-            android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            android:visibility="@{!viewModel.loading}"
             />
     </LinearLayout>
 </layout>
