@@ -3,9 +3,9 @@ package com.example.stocks;
 import java.math.BigDecimal;
 import java.util.List;
 
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import io.reactivex.Single;
 import retrofit2.http.Query;
 
 public interface YahooWebservice {

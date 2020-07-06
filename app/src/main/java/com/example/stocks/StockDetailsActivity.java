@@ -1,8 +1,5 @@
 package com.example.stocks;
 
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.stocks.databinding.ActivityStockDetailsBinding;
@@ -10,7 +7,6 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

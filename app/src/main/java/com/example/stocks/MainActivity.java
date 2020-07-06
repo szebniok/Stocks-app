@@ -1,9 +1,8 @@
 package com.example.stocks;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
