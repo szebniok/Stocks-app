@@ -3,6 +3,7 @@ package com.example.stocks;
 import org.androidannotations.annotations.EBean;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.Single;
 import retrofit2.Retrofit;
@@ -26,6 +27,12 @@ public class StockMarketRepository {
 
     public Single<List<Stock>> getSummary() {
         return yahooWebservice.getSummary(YahooApiKey)
-                .map(result -> result.marketSummaryResponse.result);
+                .map(result -> result.marketSummaryResponse.result.stream()
+                        .map(r -> r.toStock()).collect(Collectors.toList()));
+    }
+
+    public Single<Stock> getQuote(String symbol) {
+        return yahooWebservice.getQuotes(YahooApiKey, symbol)
+                .map(result -> result.quoteResponse.result.get(0));
     }
 }

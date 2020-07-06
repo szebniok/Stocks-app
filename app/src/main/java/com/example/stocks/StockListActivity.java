@@ -19,7 +19,7 @@ import java.util.List;
 
 @DataBound
 @EActivity(R.layout.activity_stock_list)
-public class StockListActivity extends AppCompatActivity {
+public class StockListActivity extends AppCompatActivity implements StockListRecyclerAdapter.OnStockListItemClick {
 
     @Bean
     StockListViewModel stockListViewModel;
@@ -46,9 +46,15 @@ public class StockListActivity extends AppCompatActivity {
         stockListViewModel.getStocks();
         stockListViewModel.stocks.observe(this, stocks -> {
             this.stocks = stocks;
-            adapter.updateStocks(stocks)
+            adapter.updateStocks(stocks);
         });
     }
 
+    @Override
+    public void handleClick(int position) {
+        Stock stock = stocks.get(position);
+        Intent intent = new Intent(this, StockDetailsActivity_.class);
+        intent.putExtra("symbol", stock.getSymbol());
+        startActivity(intent);
     }
 }

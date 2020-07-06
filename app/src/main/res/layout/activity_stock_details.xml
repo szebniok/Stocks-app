@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.stocks.StockDetailsViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Symbol: " + viewModel.stock.symbol}'
+            android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Name: " + viewModel.stock.shortName}'
+            android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Price: " + viewModel.stock.regularMarketPrice}'
+            android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            />
+    </LinearLayout>
+</layout>
