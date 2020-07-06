@@ -22,6 +22,9 @@ public interface YahooWebservice {
             @Query("interval") String interval,
             @Query("range") String range
     );
+
+    @GET("/market/auto-complete")
+    public Single<AutoCompleteResult> autoComplete(@Header("X-RapidAPI-Key") String key, @Query("query") String query);
 }
 
 class SummaryResult {
@@ -90,6 +93,27 @@ class ChartsResult {
                 static class IndicatorQuote {
                     public List<BigDecimal> close;
                 }
+            }
+        }
+    }
+}
+
+class AutoCompleteResult {
+    public ResultSet ResultSet;
+
+    static class ResultSet {
+        public List<Result> Result;
+
+        static class Result {
+            public String symbol;
+            public String name;
+
+            public Stock toStock() {
+                Stock stock = new Stock();
+                stock.setSymbol(symbol);
+                stock.setShortName(name);
+
+                return stock;
             }
         }
     }

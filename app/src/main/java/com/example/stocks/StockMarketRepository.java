@@ -22,7 +22,7 @@ public class StockMarketRepository {
 
         Single<ChartsResult.Chart.Result> chartResponse =
                 YahooApiProvider.yahooWebservice.getCharts(YahooApiProvider.YahooApiKey, symbol, "5m", "1d")
-                    .map(result -> result.chart.result.get(0));
+                        .map(result -> result.chart.result.get(0));
 
         return quoteResponse.zipWith(chartResponse, (quote, chart) -> {
             Stock stock = quote.toStock();
@@ -30,5 +30,11 @@ public class StockMarketRepository {
 
             return stock;
         });
+    }
+
+    public Single<List<Stock>> autoComplete(String name) {
+        return YahooApiProvider.yahooWebservice.autoComplete(YahooApiProvider.YahooApiKey, name)
+                .map(result -> result.ResultSet.Result.stream()
+                        .map(r -> r.toStock()).collect(Collectors.toList()));
     }
 }

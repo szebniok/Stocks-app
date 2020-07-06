@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".StockListActivity_" android:parentActivityName=".MainActivity_"/>
         <activity android:name=".StockDetailsActivity_" android:parentActivityName=".StockListActivity_"/>
+        <activity android:name=".StockSearchActivity_" android:parentActivityName=".MainActivity_"/>
     </application>
 
 </manifest>
