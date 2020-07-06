@@ -17,10 +17,10 @@ import io.reactivex.schedulers.Schedulers;
 @EBean
 public class StockListViewModel extends ViewModel {
     @Bean
-    private StockMarketRepository stockMarketRepository;
+    StockMarketRepository stockMarketRepository;
     private Disposable disposable = new CompositeDisposable();
-    MutableLiveData<List<Stock>> stocks = new MutableLiveData<>();
-    MutableLiveData<Boolean> loading = new MutableLiveData<>();
+    public MutableLiveData<List<Stock>> stocks = new MutableLiveData<>();
+    public MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
     public void getStocks() {
         disposable = stockMarketRepository.getSummary().doOnSuccess(data -> stocks.postValue(data))

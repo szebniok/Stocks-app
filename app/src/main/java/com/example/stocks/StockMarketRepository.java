@@ -6,7 +6,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @EBean
@@ -18,7 +18,7 @@ public class StockMarketRepository {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.YahooAPIHost)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         yahooWebservice = retrofit.create(YahooWebservice.class);
