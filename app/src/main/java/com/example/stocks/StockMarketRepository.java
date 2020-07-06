@@ -3,6 +3,7 @@ package com.example.stocks;
 import org.androidannotations.annotations.EBean;
 
 import java.util.List;
+import java.util.Observable;
 import java.util.stream.Collectors;
 
 import io.reactivex.Single;
@@ -32,7 +33,19 @@ public class StockMarketRepository {
     }
 
     public Single<Stock> getQuote(String symbol) {
-        return yahooWebservice.getQuotes(YahooApiKey, symbol)
-                .map(result -> result.quoteResponse.result.get(0));
+        Single<QuotesResult.QuoteResponse.QuotesResultStock> quoteResponse =
+                yahooWebservice.getQuotes(YahooApiKey, symbol)
+                        .map(result -> result.quoteResponse.result.get(0));
+
+        Single<ChartsResult.Chart.Result> chartResponse =
+                yahooWebservice.getCharts(YahooApiKey, symbol, "5m", "1d")
+                    .map(result -> result.chart.result.get(0));
+
+        return quoteResponse.zipWith(chartResponse, (quote, chart) -> {
+            Stock stock = quote.toStock();
+            stock.setTimestamps(chart.indicators.quote.get(0).close);
+
+            return stock;
+        });
     }
 }

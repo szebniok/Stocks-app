@@ -14,6 +14,14 @@ public interface YahooWebservice {
 
     @GET("/market/get-quotes")
     public Single<QuotesResult> getQuotes(@Header("X-RapidAPI-Key") String key, @Query("symbols") String symbols);
+
+    @GET("/market/get-charts")
+    public Single<ChartsResult> getCharts(
+            @Header("X-RapidAPI-Key") String key,
+            @Query("symbol") String symbol,
+            @Query("interval") String interval,
+            @Query("range") String range
+    );
 }
 
 class SummaryResult {
@@ -47,6 +55,42 @@ class QuotesResult {
     public QuoteResponse quoteResponse;
 
     static class QuoteResponse {
-        public List<Stock> result;
+        public List<QuotesResultStock> result;
+
+        static class QuotesResultStock {
+            public String symbol;
+            public String shortName;
+            public BigDecimal regularMarketPrice;
+
+            public Stock toStock() {
+                Stock stock = new Stock();
+                stock.setSymbol(symbol);
+                stock.setShortName(shortName);
+                stock.setRegularMarketPrice(regularMarketPrice);
+
+                return stock;
+            }
+
+        }
+    }
+}
+
+class ChartsResult {
+    public Chart chart;
+
+    static class Chart {
+        public List<Result> result;
+
+        static class Result {
+            public Indicator indicators;
+
+            static class Indicator {
+                public List<IndicatorQuote> quote;
+
+                static class IndicatorQuote {
+                    public List<BigDecimal> close;
+                }
+            }
+        }
     }
 }
