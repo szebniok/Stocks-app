@@ -22,7 +22,7 @@ public class StockDetailsViewModel extends ViewModel {
     StockMarketService service;
 
     public void getQuote(String symbol) {
-        disposable = service.getQuote(symbol)
+        disposable = service.getQuoteAndChart(symbol)
                 .doOnSubscribe(v -> loading.postValue(true))
                 .doAfterSuccess(v -> loading.postValue(false))
                 .doOnError(Throwable::printStackTrace)
@@ -38,4 +38,6 @@ public class StockDetailsViewModel extends ViewModel {
             disposable.dispose();
         }
     }
+
+
 }

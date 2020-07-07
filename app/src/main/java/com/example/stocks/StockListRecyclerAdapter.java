@@ -61,7 +61,6 @@ public class StockListRecyclerAdapter extends RecyclerView.Adapter<StockListRecy
 
         @Override
         public void onClick(View view) {
-            System.out.println("TEST");
             onStockListItemClick.handleClick(getAdapterPosition());
         }
     }

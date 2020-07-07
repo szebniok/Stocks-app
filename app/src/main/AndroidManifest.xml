@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.stocks">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,9 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StockListActivity_" android:parentActivityName=".MainActivity_"/>
-        <activity android:name=".StockDetailsActivity_" android:parentActivityName=".StockListActivity_"/>
-        <activity android:name=".StockSearchActivity_" android:parentActivityName=".MainActivity_"/>
+        <activity
+            android:name=".StockListActivity_"
+            android:parentActivityName=".MainActivity_" />
+        <activity
+            android:name=".StockDetailsActivity_"
+            android:parentActivityName=".StockListActivity_"
+            />
+        <activity
+            android:name=".StockSearchActivity_"
+            android:parentActivityName=".MainActivity_" />
     </application>
 
 </manifest>

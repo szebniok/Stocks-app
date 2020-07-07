@@ -29,9 +29,6 @@ public class StockListActivity extends AppCompatActivity implements StockListRec
 
     private StockListRecyclerAdapter adapter;
 
-    @ViewById(R.id.stockListRecyclerView)
-    RecyclerView recyclerView;
-
     private List<Stock> stocks;
 
     @AfterViews
@@ -39,15 +36,19 @@ public class StockListActivity extends AppCompatActivity implements StockListRec
         binding.setViewmodel(stockListViewModel);
         binding.setLifecycleOwner(this);
 
-        adapter = new StockListRecyclerAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setupRecyclerView(binding.stockListRecyclerView);
 
         stockListViewModel.getStocks();
         stockListViewModel.stocks.observe(this, stocks -> {
             this.stocks = stocks;
             adapter.updateStocks(stocks);
         });
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        adapter = new StockListRecyclerAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

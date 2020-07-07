@@ -43,7 +43,6 @@ public class StockDetailsActivity extends AppCompatActivity {
         viewModel.stock.observe(this, stock -> {
             List<Entry> entries = new ArrayList<>();
             for (int i = 0; i < stock.getTimestamps().size(); i++) {
-                System.out.println(i);
                 BigDecimal d = stock.getTimestamps().get(i);
                 entries.add(new Entry(i, d != null ? d.floatValue() : entries.get(i-1).getY()));
             }
