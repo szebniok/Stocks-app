@@ -1,7 +1,8 @@
-package com.example.stocks;
+package com.example.stocks.stock_details;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.stocks.R;
 import com.example.stocks.databinding.ActivityStockDetailsBinding;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;

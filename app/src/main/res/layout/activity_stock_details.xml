@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.stocks.StockDetailsViewModel" />
+            type="com.example.stocks.stock_details.StockDetailsViewModel" />
     </data>
 
     <FrameLayout

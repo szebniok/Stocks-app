@@ -1,4 +1,4 @@
-package com.example.stocks;
+package com.example.stocks.domain;
 
 import java.math.BigDecimal;
 import java.util.List;

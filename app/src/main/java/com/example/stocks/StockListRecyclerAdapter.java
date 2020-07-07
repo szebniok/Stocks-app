@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.stocks.domain.Stock;
+
 import java.util.List;
 
 public class StockListRecyclerAdapter extends RecyclerView.Adapter<StockListRecyclerAdapter.ViewHolder> {
@@ -65,7 +67,7 @@ public class StockListRecyclerAdapter extends RecyclerView.Adapter<StockListRecy
         }
     }
 
-    interface OnStockListItemClick {
+    public interface OnStockListItemClick {
         void handleClick(int position);
     }
 

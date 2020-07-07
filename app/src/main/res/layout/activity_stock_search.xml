@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.stocks.StockSearchViewModel" />
+            type="com.example.stocks.stock_search.StockSearchViewModel" />
     </data>
 
     <LinearLayout

@@ -1,4 +1,4 @@
-package com.example.stocks;
+package com.example.stocks.stock_list;
 
 import android.content.Intent;
 
@@ -6,14 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.stocks.R;
+import com.example.stocks.stock_details.StockDetailsActivity_;
+import com.example.stocks.StockListRecyclerAdapter;
 import com.example.stocks.databinding.ActivityStockListBinding;
+import com.example.stocks.domain.Stock;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
 import org.androidannotations.annotations.DataBound;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 

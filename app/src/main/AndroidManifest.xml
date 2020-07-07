@@ -19,14 +19,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StockListActivity_"
+            android:name=".stock_list.StockListActivity_"
             android:parentActivityName=".MainActivity_" />
         <activity
-            android:name=".StockDetailsActivity_"
-            android:parentActivityName=".StockListActivity_"
+            android:name=".stock_details.StockDetailsActivity_"
+            android:parentActivityName=".stock_list.StockListActivity_"
             />
         <activity
-            android:name=".StockSearchActivity_"
+            android:name=".stock_search.StockSearchActivity"
             android:parentActivityName=".MainActivity_" />
     </application>
 

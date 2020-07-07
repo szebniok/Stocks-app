@@ -1,4 +1,4 @@
-package com.example.stocks;
+package com.example.stocks.stock_search;
 
 import android.content.Intent;
 import android.view.View;
@@ -9,7 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.stocks.R;
+import com.example.stocks.stock_details.StockDetailsActivity_;
+import com.example.stocks.StockListRecyclerAdapter;
 import com.example.stocks.databinding.ActivityStockSearchBinding;
+import com.example.stocks.domain.Stock;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

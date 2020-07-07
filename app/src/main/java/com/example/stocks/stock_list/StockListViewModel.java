@@ -1,7 +1,10 @@
-package com.example.stocks;
+package com.example.stocks.stock_list;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.stocks.domain.Stock;
+import com.example.stocks.domain.StockMarketService;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
