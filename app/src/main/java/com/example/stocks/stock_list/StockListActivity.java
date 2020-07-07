@@ -3,12 +3,10 @@ package com.example.stocks.stock_list;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stocks.R;
+import com.example.stocks.StockRecyclerViewFragment;
 import com.example.stocks.stock_details.StockDetailsActivity_;
-import com.example.stocks.StockListRecyclerAdapter;
 import com.example.stocks.databinding.ActivityStockListBinding;
 import com.example.stocks.domain.Stock;
 
@@ -17,12 +15,11 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
 import org.androidannotations.annotations.DataBound;
 import org.androidannotations.annotations.EActivity;
-
-import java.util.List;
+import org.androidannotations.annotations.FragmentById;
 
 @DataBound
 @EActivity(R.layout.activity_stock_list)
-public class StockListActivity extends AppCompatActivity implements StockListRecyclerAdapter.OnStockListItemClick {
+public class StockListActivity extends AppCompatActivity {
 
     @Bean
     StockListViewModel stockListViewModel;
@@ -30,33 +27,23 @@ public class StockListActivity extends AppCompatActivity implements StockListRec
     @BindingObject
     ActivityStockListBinding binding;
 
-    private StockListRecyclerAdapter adapter;
-
-    private List<Stock> stocks;
+    @FragmentById(R.id.stockListRecyclerViewFragment)
+    StockRecyclerViewFragment fragment;
 
     @AfterViews
     void setBinding() {
         binding.setViewmodel(stockListViewModel);
         binding.setLifecycleOwner(this);
 
-        setupRecyclerView(binding.stockListRecyclerView);
+        fragment.setItemClickHandler(this::handleClick);
 
         stockListViewModel.getStocks();
         stockListViewModel.stocks.observe(this, stocks -> {
-            this.stocks = stocks;
-            adapter.updateStocks(stocks);
+            fragment.updateStocks(stocks);
         });
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        adapter = new StockListRecyclerAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public void handleClick(int position) {
-        Stock stock = stocks.get(position);
+    public void handleClick(Stock stock) {
         Intent intent = new Intent(this, StockDetailsActivity_.class);
         intent.putExtra("symbol", stock.getSymbol());
         startActivity(intent);

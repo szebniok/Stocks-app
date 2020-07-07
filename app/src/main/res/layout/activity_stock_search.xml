@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -39,15 +39,21 @@
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.loading}"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.loading}" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/searchResults"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{!viewModel.loading}"
-                tools:visibility="gone" />
+                tools:visibility="gone">
+
+                <fragment
+                    android:id="@+id/stockSearchRecyclerViewFragment"
+                    android:name="com.example.stocks.StockRecyclerViewFragment_"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
         </FrameLayout>
 
     </LinearLayout>

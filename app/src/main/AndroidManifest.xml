@@ -23,10 +23,9 @@
             android:parentActivityName=".MainActivity_" />
         <activity
             android:name=".stock_details.StockDetailsActivity_"
-            android:parentActivityName=".stock_list.StockListActivity_"
-            />
+            android:parentActivityName=".stock_list.StockListActivity_" />
         <activity
-            android:name=".stock_search.StockSearchActivity"
+            android:name=".stock_search.StockSearchActivity_"
             android:parentActivityName=".MainActivity_" />
     </application>
 

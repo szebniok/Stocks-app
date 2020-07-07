@@ -24,7 +24,7 @@ public class StockListRecyclerAdapter extends RecyclerView.Adapter<StockListRecy
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_stock_recycler_view_item, parent, false);
         return new ViewHolder(view);
     }
 
