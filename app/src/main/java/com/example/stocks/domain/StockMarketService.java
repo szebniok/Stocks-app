@@ -2,7 +2,6 @@ package com.example.stocks.domain;
 
 import com.example.stocks.YahooApiProvider;
 import com.example.stocks.domain.ChartsResult.Chart.Result;
-import com.example.stocks.domain.QuotesResult.QuoteResponse.QuotesResultStock;
 
 import org.androidannotations.annotations.EBean;
 

@@ -38,10 +38,15 @@ public class StockFavouritesActivity extends AppCompatActivity {
 
         fragment.setItemClickHandler(this::handleClick);
 
-        viewModel.getFavourites();
         viewModel.stocks.observe(this, stocks -> {
             fragment.updateStocks(stocks);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.getFavourites();
     }
 
     void handleClick(Stock stock) {

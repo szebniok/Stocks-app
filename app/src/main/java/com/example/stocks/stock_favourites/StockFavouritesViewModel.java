@@ -3,6 +3,8 @@ package com.example.stocks.stock_favourites;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.stocks.domain.Preferences;
+import com.example.stocks.domain.PreferencesService;
 import com.example.stocks.domain.Preferences_;
 import com.example.stocks.domain.Stock;
 import com.example.stocks.domain.StockMarketService;
@@ -25,11 +27,11 @@ public class StockFavouritesViewModel extends ViewModel {
     @Bean
     StockMarketService service;
 
-    @Pref
-    Preferences_ preferences;
+    @Bean
+    PreferencesService preferencesService;
 
     void getFavourites() {
-        List<String> favourites = new ArrayList<>(preferences.favouriteSymbols().get());
+        List<String> favourites = new ArrayList<>(preferencesService.getFavouriteSymbols());
 
         service.getQuotes(favourites)
                 .doOnSubscribe(v -> loading.postValue(true))
