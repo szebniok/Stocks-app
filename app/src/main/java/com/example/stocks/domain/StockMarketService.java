@@ -15,8 +15,8 @@ import io.reactivex.Single;
 public class StockMarketService {
     public Single<List<Stock>> getSummary() {
         return YahooApiProvider.yahooWebservice
-                .getSummary(YahooApiProvider.YahooApiKey)
-                .map(result -> result.marketSummaryResponse.result.stream()
+                .getSummary()
+                .map(result -> result.quoteResponse.result.stream()
                         .map(r -> r.toStock())
                         .collect(Collectors.toList())
                 );
@@ -37,17 +37,17 @@ public class StockMarketService {
 
     private Single<QuotesResultStock> getQuote(String symbol) {
         return YahooApiProvider.yahooWebservice
-                .getQuotes(YahooApiProvider.YahooApiKey, symbol)
+                .getQuotes(symbol)
                 .map(result -> result.quoteResponse.result.get(0));
     }
 
     private Single<Result> getChart(String symbol) {
-        return YahooApiProvider.yahooWebservice.getCharts(YahooApiProvider.YahooApiKey, symbol, "5m", "1d")
+        return YahooApiProvider.yahooWebservice.getCharts(symbol, "5m", "1d")
                 .map(result -> result.chart.result.get(0));
     }
 
     public Single<List<Stock>> autoComplete(String name) {
-        return YahooApiProvider.yahooWebservice.autoComplete(YahooApiProvider.YahooApiKey, name)
+        return YahooApiProvider.yahooWebservice.autoComplete("https://autoc.finance.yahoo.com/autoc", name, "en")
                 .map(result -> result.ResultSet.Result.stream()
                         .map(r -> r.toStock())
                         .collect(Collectors.toList())

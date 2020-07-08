@@ -7,8 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class YahooApiProvider {
-    public static final String YahooApiHost = "https://apidojo-yahoo-finance-v1.p.rapidapi.com";
-    public static final String YahooApiKey = "yhDyuXUP2HB27vnY5Z1FIaN7zuZMSYBy";
+    public static final String YahooApiHost = "https://query1.finance.yahoo.com/v7/finance/";
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(YahooApiHost)
