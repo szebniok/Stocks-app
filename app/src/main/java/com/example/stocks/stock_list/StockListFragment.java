@@ -2,30 +2,29 @@ package com.example.stocks.stock_list;
 
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.stocks.R;
 import com.example.stocks.StockRecyclerViewFragment;
-import com.example.stocks.stock_details.StockDetailsActivity_;
-import com.example.stocks.databinding.ActivityStockListBinding;
+import com.example.stocks.databinding.FragmentStockListBinding;
 import com.example.stocks.domain.Stock;
+import com.example.stocks.stock_details.StockDetailsActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
 import org.androidannotations.annotations.DataBound;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 
 @DataBound
-@EActivity(R.layout.activity_stock_list)
-public class StockListActivity extends AppCompatActivity {
-
+@EFragment(R.layout.fragment_stock_list)
+public class StockListFragment extends Fragment {
     @Bean
     StockListViewModel stockListViewModel;
 
     @BindingObject
-    ActivityStockListBinding binding;
+    FragmentStockListBinding binding;
 
     @FragmentById(R.id.stockListRecyclerViewFragment)
     StockRecyclerViewFragment fragment;
@@ -44,7 +43,7 @@ public class StockListActivity extends AppCompatActivity {
     }
 
     public void handleClick(Stock stock) {
-        Intent intent = new Intent(this, StockDetailsActivity_.class);
+        Intent intent = new Intent(getActivity(), StockDetailsActivity_.class);
         intent.putExtra("symbol", stock.getSymbol());
         startActivity(intent);
     }

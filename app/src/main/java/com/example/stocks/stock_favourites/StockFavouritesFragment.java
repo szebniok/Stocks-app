@@ -2,7 +2,7 @@ package com.example.stocks.stock_favourites;
 
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.stocks.R;
 import com.example.stocks.StockRecyclerViewFragment;
@@ -14,12 +14,12 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
 import org.androidannotations.annotations.DataBound;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 
 @DataBound
-@EActivity(R.layout.activity_stock_favourites)
-public class StockFavouritesActivity extends AppCompatActivity {
+@EFragment(R.layout.activity_stock_favourites)
+public class StockFavouritesFragment extends Fragment {
 
     @Bean
     StockFavouritesViewModel viewModel;
@@ -44,13 +44,13 @@ public class StockFavouritesActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         viewModel.getFavourites();
     }
 
     void handleClick(Stock stock) {
-        Intent intent = new Intent(this, StockDetailsActivity_.class);
+        Intent intent = new Intent(getActivity(), StockDetailsActivity_.class);
         intent.putExtra("symbol", stock.getSymbol());
         startActivity(intent);
     }

@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.stocks.StockListRecyclerAdapter.OnStockListItemClick;
 import com.example.stocks.domain.Stock;
 
 import org.androidannotations.annotations.AfterViews;

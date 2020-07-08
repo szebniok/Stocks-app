@@ -18,17 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".stock_list.StockListActivity_"
-            android:parentActivityName=".MainActivity_" />
-        <activity
-            android:name=".stock_details.StockDetailsActivity_"
-            android:parentActivityName=".stock_list.StockListActivity_" />
-        <activity
-            android:name=".stock_search.StockSearchActivity_"
-            android:parentActivityName=".MainActivity_" />
-        <activity
-            android:name=".stock_favourites.StockFavouritesActivity_"
-            android:parentActivityName=".MainActivity_" />
+        <activity android:name=".stock_details.StockDetailsActivity_" />
     </application>
 </manifest>

@@ -3,15 +3,12 @@ package com.example.stocks.stock_favourites;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.stocks.domain.Preferences;
 import com.example.stocks.domain.PreferencesService;
-import com.example.stocks.domain.Preferences_;
 import com.example.stocks.domain.Stock;
 import com.example.stocks.domain.StockMarketService;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.List;
