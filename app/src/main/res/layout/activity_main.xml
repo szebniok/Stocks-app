@@ -18,4 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:text="Stocks search" />
+    <Button
+        android:id="@+id/favouritesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="Stocks favourites" />
 </LinearLayout>

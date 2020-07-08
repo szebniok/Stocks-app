@@ -27,6 +27,8 @@
         <activity
             android:name=".stock_search.StockSearchActivity_"
             android:parentActivityName=".MainActivity_" />
+        <activity
+            android:name=".stock_favourites.StockFavouritesActivity_"
+            android:parentActivityName=".MainActivity_" />
     </application>
-
 </manifest>

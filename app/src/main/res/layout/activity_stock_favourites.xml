@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.example.stocks.stock_list.StockListViewModel" />
+            name="viewModel"
+            type="com.example.stocks.stock_favourites.StockFavouritesViewModel" />
     </data>
 
     <LinearLayout
@@ -18,16 +18,16 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewmodel.loading}" />
+            android:visibility="@{viewModel.loading}" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{!viewmodel.loading}"
+            android:visibility="@{!viewModel.loading}"
             tools:visibility="gone">
 
             <fragment
-                android:id="@+id/stockListRecyclerViewFragment"
+                android:id="@+id/stockFavouritesRecyclerViewFragment"
                 android:name="com.example.stocks.StockRecyclerViewFragment_"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

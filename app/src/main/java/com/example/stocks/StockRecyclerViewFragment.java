@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @EFragment(R.layout.fragment_stock_recycler_view)
-public class StockRecyclerViewFragment extends Fragment implements OnStockListItemClick {
+public class StockRecyclerViewFragment extends Fragment {
     private Consumer<Stock> onStockListItemClick;
     private List<Stock> stocks;
     private StockListRecyclerAdapter adapter;
@@ -25,7 +25,7 @@ public class StockRecyclerViewFragment extends Fragment implements OnStockListIt
 
     @AfterViews
     void setup() {
-        adapter = new StockListRecyclerAdapter(this);
+        adapter = new StockListRecyclerAdapter(this::handleClick);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -39,7 +39,6 @@ public class StockRecyclerViewFragment extends Fragment implements OnStockListIt
         adapter.updateStocks(stocks);
     }
 
-    @Override
     public void handleClick(int position) {
         if (onStockListItemClick != null) {
             onStockListItemClick.accept(stocks.get(position));

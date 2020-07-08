@@ -45,6 +45,12 @@
                 android:text='@{"Price: " + viewModel.stock.regularMarketPrice}'
                 android:visibility="@{!viewModel.loading}" />
 
+            <ImageView
+                android:id="@+id/favouritesStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@{viewModel.favourite ? @android:drawable/star_on : @android:drawable/star_off}" />
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"

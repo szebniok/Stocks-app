@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.DataBound;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -39,7 +40,7 @@ public class StockDetailsActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         String symbol = getIntent().getStringExtra("symbol");
-        viewModel.getQuote(symbol);
+        viewModel.getQuoteAndChart(symbol);
 
         viewModel.stock.observe(this, stock -> {
             List<Entry> entries = new ArrayList<>();
@@ -54,5 +55,10 @@ public class StockDetailsActivity extends AppCompatActivity {
             chart.setData(lineData);
             chart.invalidate();
         });
+    }
+
+    @Click(R.id.favouritesStar)
+    void onFavouritesStarClick() {
+        viewModel.toggleFavourites(viewModel.stock.getValue());
     }
 }

@@ -6,6 +6,8 @@ import com.example.stocks.domain.QuotesResult.QuoteResponse.QuotesResultStock;
 
 import org.androidannotations.annotations.EBean;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,22 +25,33 @@ public class StockMarketService {
     }
 
     public Single<Stock> getQuoteAndChart(String symbol) {
-        Single<QuotesResultStock> quoteResponse = getQuote(symbol);
+        Single<Stock> quote = getQuote(symbol);
 
         Single<Result> chartResponse = getChart(symbol);
 
-        return quoteResponse.zipWith(chartResponse, (quote, chart) -> {
-            Stock stock = quote.toStock();
+        return quote.zipWith(chartResponse, (stock, chart) -> {
             stock.setTimestamps(chart.indicators.quote.get(0).close);
 
             return stock;
         });
     }
 
-    private Single<QuotesResultStock> getQuote(String symbol) {
+    public Single<Stock> getQuote(String symbol) {
+        return getQuotes(Collections.singletonList(symbol))
+                .map(list -> list.get(0));
+    }
+
+    public Single<List<Stock>> getQuotes(List<String> symbols) {
+        if (symbols.size() == 0) {
+            return Single.just(new ArrayList<>());
+        }
+
         return YahooApiProvider.yahooWebservice
-                .getQuotes(symbol)
-                .map(result -> result.quoteResponse.result.get(0));
+                .getQuotes(String.join(",", symbols))
+                .map(result -> result.quoteResponse.result.stream()
+                        .map(r -> r.toStock())
+                        .collect(Collectors.toList())
+                );
     }
 
     private Single<Result> getChart(String symbol) {
