@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface YahooWebservice {
-    @GET("quote?symbols=^GSPC,IWDA.AS,^VIX,BTC-USD")
+    @GET("quote?symbols=^GSPC,^DJI,^IXIC,^RUT,CL=F,GC=F,SI=F,EURUSD=X,EURPLN=X,IWDA.AS,^VIX,BTC-USD")
     public Single<QuotesResult> getSummary();
 
     @GET("quote")
