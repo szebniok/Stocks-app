@@ -21,16 +21,10 @@
             android:visibility="@{viewModel.loading}" />
 
         <FrameLayout
+            android:id="@+id/stockFavouritesRecyclerViewFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{!viewModel.loading}"
-            tools:visibility="gone">
-
-            <fragment
-                android:id="@+id/stockFavouritesRecyclerViewFragment"
-                android:name="com.example.stocks.StockRecyclerViewFragment_"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
+            tools:visibility="gone" />
     </LinearLayout>
 </layout>

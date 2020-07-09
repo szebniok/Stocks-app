@@ -15,22 +15,22 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Search..." />
+<!--            <EditText-->
+<!--                android:id="@+id/searchEditText"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Search..." />-->
 
-            <Button
-                android:id="@+id/searchSubmit"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Submit" />
-        </LinearLayout>
+<!--            <Button-->
+<!--                android:id="@+id/searchSubmit"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Submit" />-->
+<!--        </LinearLayout>-->
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -46,13 +46,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{!viewModel.loading}"
-                tools:visibility="gone">
+                tools:visibility="gone"
+                android:id="@+id/stockSearchRecyclerViewFragment">
 
-                <fragment
-                    android:id="@+id/stockSearchRecyclerViewFragment"
-                    android:name="com.example.stocks.StockRecyclerViewFragment_"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+<!--                <fragment-->
+<!--                    android:id="@+id/stockSearchRecyclerViewFragment"-->
+<!--                    android:name="com.example.stocks.StockRecyclerViewFragment_"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent" />-->
             </FrameLayout>
         </FrameLayout>
 

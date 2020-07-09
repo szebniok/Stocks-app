@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.stocks.R;
 import com.example.stocks.StockRecyclerViewFragment;
+import com.example.stocks.StockRecyclerViewFragment_;
 import com.example.stocks.databinding.FragmentStockListBinding;
 import com.example.stocks.domain.Stock;
 import com.example.stocks.stock_details.StockDetailsActivity_;
@@ -26,13 +27,17 @@ public class StockListFragment extends Fragment {
     @BindingObject
     FragmentStockListBinding binding;
 
-    @FragmentById(R.id.stockListRecyclerViewFragment)
-    StockRecyclerViewFragment fragment;
-
     @AfterViews
     void setBinding() {
         binding.setViewmodel(stockListViewModel);
         binding.setLifecycleOwner(this);
+
+        StockRecyclerViewFragment_ fragment = new StockRecyclerViewFragment_();
+
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.stockListRecyclerViewFragment, fragment)
+                .commit();
 
         fragment.setItemClickHandler(this::handleClick);
 
