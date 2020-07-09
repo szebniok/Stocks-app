@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.stocks.R;
 import com.example.stocks.StockRecyclerViewFragment;
-import com.example.stocks.databinding.ActivityStockSearchBinding;
+import com.example.stocks.databinding.FragmentStockSearchBinding;
 import com.example.stocks.domain.Stock;
 import com.example.stocks.stock_details.StockDetailsActivity_;
 
@@ -24,7 +24,7 @@ import org.androidannotations.annotations.ViewById;
 
 
 @DataBound
-@EFragment(R.layout.activity_stock_search)
+@EFragment(R.layout.fragment_stock_search)
 public class StockSearchFragment extends Fragment {
     @ViewById
     EditText searchEditText;
@@ -36,7 +36,7 @@ public class StockSearchFragment extends Fragment {
     StockRecyclerViewFragment fragment;
 
     @BindingObject
-    ActivityStockSearchBinding binding;
+    FragmentStockSearchBinding binding;
 
     @Bean
     StockSearchViewModel viewModel;

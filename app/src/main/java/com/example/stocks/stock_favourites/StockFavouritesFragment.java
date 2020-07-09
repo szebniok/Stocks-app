@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.stocks.R;
 import com.example.stocks.StockRecyclerViewFragment;
-import com.example.stocks.databinding.ActivityStockFavouritesBinding;
+import com.example.stocks.databinding.FragmentStockFavouritesBinding;
 import com.example.stocks.domain.Stock;
 import com.example.stocks.stock_details.StockDetailsActivity_;
 
@@ -18,7 +18,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 
 @DataBound
-@EFragment(R.layout.activity_stock_favourites)
+@EFragment(R.layout.fragment_stock_favourites)
 public class StockFavouritesFragment extends Fragment {
 
     @Bean
@@ -28,7 +28,7 @@ public class StockFavouritesFragment extends Fragment {
     StockRecyclerViewFragment fragment;
 
     @BindingObject
-    ActivityStockFavouritesBinding binding;
+    FragmentStockFavouritesBinding binding;
 
     @AfterViews
     void setup() {
