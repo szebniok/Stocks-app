@@ -68,9 +68,4 @@ public class StockDetailsActivity extends AppCompatActivity {
         chart.setData(lineData);
         chart.invalidate();
     }
-
-    @Click(R.id.favouritesStar)
-    void onFavouritesStarClick() {
-        viewModel.toggleFavourites(viewModel.stock.getValue());
-    }
 }

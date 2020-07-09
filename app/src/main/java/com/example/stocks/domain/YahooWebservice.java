@@ -11,20 +11,20 @@ import retrofit2.http.Url;
 
 public interface YahooWebservice {
     @GET("quote?symbols=^GSPC,^DJI,^IXIC,^RUT,CL=F,GC=F,SI=F,EURUSD=X,EURPLN=X,IWDA.AS,^VIX,BTC-USD")
-    public Single<QuotesResult> getSummary();
+    Single<QuotesResult> getSummary();
 
     @GET("quote")
-    public Single<QuotesResult> getQuotes(@Query("symbols") String symbols);
+    Single<QuotesResult> getQuotes(@Query("symbols") String symbols);
 
     @GET("chart/{symbol}")
-    public Single<ChartsResult> getCharts(
+    Single<ChartsResult> getCharts(
             @Path("symbol") String symbol,
             @Query("interval") String interval,
             @Query("range") String range
     );
 
     @GET
-    public Single<AutoCompleteResult> autoComplete(@Url String baseUrl, @Query("query") String query, @Query("lang") String lang);
+    Single<AutoCompleteResult> autoComplete(@Url String baseUrl, @Query("query") String query, @Query("lang") String lang);
 }
 
 

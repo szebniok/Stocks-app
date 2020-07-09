@@ -25,7 +25,7 @@ public class MainFragment extends Fragment {
 
     private FragmentStateAdapter adapter;
 
-    private static final String TABS_NAMES[] = {"Summary", "Search", "Favourites"};
+    private static final String TABS_NAMES[] = {"Summary", "Favourites"};
 
     @AfterViews
     public void setup() {
@@ -46,8 +46,6 @@ public class MainFragment extends Fragment {
             switch(position) {
                 case 0:
                     return new StockListFragment_();
-                case 1:
-                    return new StockSearchFragment_();
                 default:
                     return new StockFavouritesFragment_();
             }
@@ -55,7 +53,7 @@ public class MainFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return TABS_NAMES.length;
         }
     }
 }

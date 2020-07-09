@@ -50,10 +50,12 @@ public class StockDetailsViewModel extends ViewModel {
         }
     }
 
-    void toggleFavourites(Stock stock) {
-        String toggledSymbol = stock.getSymbol();
+    public void toggleFavourites() {
+        if (stock != null && stock.getValue() != null) {
+            String toggledSymbol = stock.getValue().getSymbol();
 
-        preferencesService.toggleFavouriteStatus(toggledSymbol);
-        favourite.postValue(preferencesService.isFavourite(toggledSymbol));
+            preferencesService.toggleFavouriteStatus(toggledSymbol);
+            favourite.postValue(preferencesService.isFavourite(toggledSymbol));
+        }
     }
 }

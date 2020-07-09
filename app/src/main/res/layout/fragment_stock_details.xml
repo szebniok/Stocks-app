@@ -49,7 +49,8 @@
                 android:id="@+id/favouritesStar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@{viewModel.favourite ? @android:drawable/star_on : @android:drawable/star_off}" />
+                android:src="@{viewModel.favourite ? @android:drawable/star_on : @android:drawable/star_off}"
+                android:onClick="@{v -> viewModel.toggleFavourites()}"/>
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
