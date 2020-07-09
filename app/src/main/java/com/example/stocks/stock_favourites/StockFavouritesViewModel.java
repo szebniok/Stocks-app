@@ -10,7 +10,6 @@ import com.example.stocks.domain.StockMarketService;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,7 +27,7 @@ public class StockFavouritesViewModel extends ViewModel {
     PreferencesService preferencesService;
 
     void getFavourites() {
-        List<String> favourites = new ArrayList<>(preferencesService.getFavouriteSymbols());
+        List<String> favourites = preferencesService.getFavouriteSymbols();
 
         service.getQuotes(favourites)
                 .doOnSubscribe(v -> loading.postValue(true))

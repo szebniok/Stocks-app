@@ -4,8 +4,8 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @EBean
 public class PreferencesService {
@@ -14,7 +14,7 @@ public class PreferencesService {
     Preferences_ preferences;
 
     public void toggleFavouriteStatus(String symbol) {
-        Set<String> favourites = preferences.favouriteSymbols().get();
+        List<String> favourites = getFavouriteSymbols();
 
         if (isFavourite(symbol)) {
             favourites.remove(symbol);
@@ -22,18 +22,22 @@ public class PreferencesService {
             favourites.add(symbol);
         }
 
-        // without this line settings are not persisted
-        preferences.favouriteSymbols().remove();
-
-        preferences.favouriteSymbols().put(favourites);
+        saveFavouriteSymbols(favourites);
     }
 
     public boolean isFavourite(String symbol) {
-        Set<String> favourites = preferences.favouriteSymbols().get();
-        return favourites.contains(symbol);
+        return getFavouriteSymbols().contains(symbol);
     }
 
     public List<String> getFavouriteSymbols() {
-        return new ArrayList<>(preferences.favouriteSymbols().get());
+        String joinedFavouriteSymbols = preferences.favouriteSymbols().get();
+        if (preferences == null || joinedFavouriteSymbols.equals("")) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(Arrays.asList(joinedFavouriteSymbols.split(",")));
+    }
+
+    private void saveFavouriteSymbols(List<String> favourites) {
+        preferences.favouriteSymbols().put(String.join(",", favourites));
     }
 }

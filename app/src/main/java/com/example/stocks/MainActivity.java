@@ -1,7 +1,5 @@
 package com.example.stocks;
 
-import com.google.android.material.tabs.TabLayoutMediator;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -12,6 +10,7 @@ import com.example.stocks.stock_favourites.StockFavouritesFragment_;
 import com.example.stocks.stock_list.StockListFragment_;
 import com.example.stocks.stock_search.StockSearchFragment_;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;

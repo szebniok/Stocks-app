@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.stocks.R;
 import com.example.stocks.databinding.ActivityStockDetailsBinding;
+import com.example.stocks.domain.Stock;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -43,18 +44,28 @@ public class StockDetailsActivity extends AppCompatActivity {
         viewModel.getQuoteAndChart(symbol);
 
         viewModel.stock.observe(this, stock -> {
-            List<Entry> entries = new ArrayList<>();
-            for (int i = 0; i < stock.getTimestamps().size(); i++) {
-                BigDecimal d = stock.getTimestamps().get(i);
-                entries.add(new Entry(i, d != null ? d.floatValue() : entries.get(i-1).getY()));
-            }
-            LineDataSet dataSet = new LineDataSet(entries, "price");
-            dataSet.setColor(R.color.colorPrimaryDark);
-            LineData lineData = new LineData(dataSet);
-            lineData.setDrawValues(false);
-            chart.setData(lineData);
-            chart.invalidate();
+            createChart(stock);
         });
+    }
+
+    private void createChart(Stock stock) {
+        List<BigDecimal> timestamps = stock.getTimestamps();
+        if (timestamps == null) return;
+
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < stock.getTimestamps().size(); i++) {
+            BigDecimal d = stock.getTimestamps().get(i);
+            entries.add(new Entry(i, d != null ? d.floatValue() : entries.get(i - 1).getY()));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, "price");
+        dataSet.setColor(R.color.colorPrimaryDark);
+
+        LineData lineData = new LineData(dataSet);
+        lineData.setDrawValues(false);
+
+        chart.setData(lineData);
+        chart.invalidate();
     }
 
     @Click(R.id.favouritesStar)
