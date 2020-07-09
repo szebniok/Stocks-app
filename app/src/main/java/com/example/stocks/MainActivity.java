@@ -1,15 +1,12 @@
 package com.example.stocks;
 
-import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.stocks.stock_search.StockSearchFragment_;
+import com.example.stocks.StockRecyclerViewFragment.ListType;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -35,10 +32,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                StockSearchFragment_ fragment = new StockSearchFragment_();
-                Bundle bundle = new Bundle();
-                bundle.putString("query", query);
-                fragment.setArguments(bundle);
+                StockRecyclerViewFragment_ fragment = StockRecyclerViewFragment.newInstance(ListType.SEARCH, query);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.activityMainRoot, fragment)

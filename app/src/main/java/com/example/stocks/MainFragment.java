@@ -5,9 +5,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.stocks.stock_favourites.StockFavouritesFragment_;
-import com.example.stocks.stock_list.StockListFragment_;
-import com.example.stocks.stock_search.StockSearchFragment_;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -45,9 +42,9 @@ public class MainFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch(position) {
                 case 0:
-                    return new StockListFragment_();
+                    return StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.SUMMARY);
                 default:
-                    return new StockFavouritesFragment_();
+                    return StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.FAVOURITES);
             }
         }
 

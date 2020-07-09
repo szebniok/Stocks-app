@@ -1,7 +1,6 @@
 package com.example.stocks.stock_details;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.example.stocks.R;
 import com.example.stocks.databinding.FragmentStockDetailsBinding;
@@ -14,7 +13,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.BindingObject;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.DataBound;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;

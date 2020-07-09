@@ -13,11 +13,11 @@ import com.example.stocks.domain.Stock;
 
 import java.util.List;
 
-public class StockListRecyclerAdapter extends RecyclerView.Adapter<StockListRecyclerAdapter.ViewHolder> {
+public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
     OnStockListItemClick onStockListItemClick;
     private List<Stock> stocks;
 
-    public StockListRecyclerAdapter(OnStockListItemClick onStockListItemClick) {
+    public StockRecyclerViewAdapter(OnStockListItemClick onStockListItemClick) {
         this.onStockListItemClick = onStockListItemClick;
     }
 
