@@ -6,12 +6,15 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.stocks.stock_recycler.StockRecyclerViewFragment;
+import com.example.stocks.stock_recycler.StockRecyclerViewFragment.ListType;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import io.reactivex.subjects.BehaviorSubject;
 
 @EFragment(R.layout.fragment_main)
 public class MainFragment extends Fragment {
@@ -23,11 +26,9 @@ public class MainFragment extends Fragment {
 
     private FragmentStateAdapter adapter;
 
-    private static StockRecyclerViewFragment viewPagerFragments[] = {
-            StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.SUMMARY),
-            StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.FAVOURITES)
-    };
-    private static final String TABS_NAMES[] = {"Summary", "Favourites"};
+    private static final String[] TABS_NAMES = {"Summary", "Favourites"};
+
+    private BehaviorSubject<String> searchSubject = BehaviorSubject.createDefault("");
 
     @AfterViews
     public void setup() {
@@ -39,15 +40,11 @@ public class MainFragment extends Fragment {
     }
 
     public void showSearchResults(String query) {
-        StockRecyclerViewFragment currentFragment = viewPagerFragments[viewPager.getCurrentItem()];
-
-        currentFragment.showSearchResults(query);
+        searchSubject.onNext(query);
     }
 
     public void showDefaultResults() {
-        StockRecyclerViewFragment currentFragment = viewPagerFragments[viewPager.getCurrentItem()];
-
-        currentFragment.showDefaultResults();
+        searchSubject.onNext("");
     }
 
     private class MainActivityFragmentStateAdapter extends FragmentStateAdapter {
@@ -57,7 +54,12 @@ public class MainFragment extends Fragment {
 
         @Override
         public Fragment createFragment(int position) {
-            return viewPagerFragments[position];
+            switch (position) {
+                case 0:
+                    return StockRecyclerViewFragment.newInstance(ListType.SUMMARY, searchSubject);
+                default:
+                    return StockRecyclerViewFragment.newInstance(ListType.FAVOURITES, searchSubject);
+            }
         }
 
         @Override

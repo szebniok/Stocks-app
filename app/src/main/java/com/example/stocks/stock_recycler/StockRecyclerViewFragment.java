@@ -1,7 +1,6 @@
 package com.example.stocks.stock_recycler;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,13 +19,14 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import io.reactivex.subjects.BehaviorSubject;
 
 @DataBound
 @EFragment(R.layout.fragment_stock_recycler_view)
 public class StockRecyclerViewFragment extends Fragment {
 
-    @BindingObject
-    FragmentStockRecyclerViewBinding binding;
 
     public enum ListType {
         SUMMARY("SUMMARY"), FAVOURITES("FAVOURITES");
@@ -38,8 +38,8 @@ public class StockRecyclerViewFragment extends Fragment {
         }
     }
 
-    private List<Stock> stocks;
-    private StockRecyclerViewAdapter adapter;
+    @BindingObject
+    FragmentStockRecyclerViewBinding binding;
 
     @ViewById(R.id.stockRecyclerView)
     RecyclerView recyclerView;
@@ -47,24 +47,17 @@ public class StockRecyclerViewFragment extends Fragment {
     @Bean
     StockRecyclerViewViewModel viewModel;
 
+    private List<Stock> stocks;
+    private List<Stock> originalStocks;
+    private StockRecyclerViewAdapter adapter;
+
     private ListType type;
+    private BehaviorSubject<String> searchSubject;
 
-    public static StockRecyclerViewFragment_ newInstance(ListType type) {
-        Bundle bundle = new Bundle();
-        bundle.putString("type", type.encodedType);
-
+    public static StockRecyclerViewFragment_ newInstance(ListType type, BehaviorSubject<String> searchSubject) {
         StockRecyclerViewFragment_ newFragment = new StockRecyclerViewFragment_();
-        newFragment.setArguments(bundle);
-        return newFragment;
-    }
-
-    public static StockRecyclerViewFragment_ newInstance(ListType type, String query) {
-        StockRecyclerViewFragment_ newFragment = newInstance(type);
-
-        Bundle bundle = newFragment.getArguments();
-        bundle.putString("query", query);
-        newFragment.setArguments(bundle);
-
+        newFragment.setType(type);
+        newFragment.setSearchSubject(searchSubject);
         return newFragment;
     }
 
@@ -73,9 +66,6 @@ public class StockRecyclerViewFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        String encodedType = getArguments().getString("type");
-        setType(encodedType);
-
         adapter = new StockRecyclerViewAdapter(this::handleClick);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -83,21 +73,32 @@ public class StockRecyclerViewFragment extends Fragment {
         showDefaultResults();
 
         viewModel.stocks.observe(this, this::updateStocks);
+        searchSubject.subscribe(this::handleSearchTextChange);
     }
 
-    private void setType(String encodedType) {
-        if (encodedType.equals(ListType.SUMMARY.encodedType)) {
-            this.type = ListType.SUMMARY;
-        } else if (encodedType.equals(ListType.FAVOURITES.encodedType)) {
-            this.type = ListType.FAVOURITES;
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (type == ListType.FAVOURITES) {
+            showDefaultResults();
         }
     }
 
-    public void showSearchResults(String query) {
-        viewModel.search(query);
+    public void handleClick(int position) {
+        Intent intent = new Intent(getActivity(), StockDetailsActivity_.class);
+        intent.putExtra("symbol", stocks.get(position).getSymbol());
+        startActivity(intent);
     }
 
-    public void showDefaultResults() {
+    public void setType(ListType type) {
+        this.type = type;
+    }
+
+    public void setSearchSubject(BehaviorSubject<String> searchSubject) {
+        this.searchSubject = searchSubject;
+    }
+
+    private void showDefaultResults() {
         switch (this.type) {
             case SUMMARY:
                 viewModel.getSummary();
@@ -108,14 +109,35 @@ public class StockRecyclerViewFragment extends Fragment {
         }
     }
 
-    private void updateStocks(List<Stock> stocks) {
-        this.stocks = stocks;
-        adapter.updateStocks(stocks);
+    private void handleSearchTextChange(String query) {
+        if (query.equals("")) {
+            showDefaultResults();
+        } else if (type == ListType.SUMMARY) {
+            viewModel.search(query);
+        } else if (type == ListType.FAVOURITES) {
+            filterStocks(query);
+            adapter.updateStocks(stocks);
+        }
     }
 
-    public void handleClick(int position) {
-        Intent intent = new Intent(getActivity(), StockDetailsActivity_.class);
-        intent.putExtra("symbol", stocks.get(position).getSymbol());
-        startActivity(intent);
+    private void updateStocks(List<Stock> stocks) {
+        this.originalStocks = stocks;
+        this.stocks = stocks;
+
+        // we have fetched new data about favourite symbols, so we need to filter them
+        if (type == ListType.FAVOURITES) {
+            filterStocks(searchSubject.getValue());
+        }
+
+        adapter.updateStocks(this.stocks);
+    }
+
+    private void filterStocks(String query) {
+        if (stocks == null) return;
+
+        stocks = originalStocks
+                .stream()
+                .filter(stock -> stock.getShortName().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
     }
 }
