@@ -5,23 +5,27 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
-    MainFragment_ fragment;
+    Fragment currentFragment;
+
+    @ViewById(R.id.bottomNavigation)
+    BottomNavigationView bottomNavigationView;
 
     @AfterViews
     void setup() {
-        fragment = new MainFragment_();
+        bottomNavigationView.setOnNavigationItemSelectedListener(this::handleBottomNavigationItemSelect);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.activityMainRoot, fragment, "mainFragment")
-                .commit();
+        switchFragment(new MainFragment_());
     }
 
     @Override
@@ -34,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                fragment.showSearchResults(query);
+                if (currentFragment instanceof MainFragment_) {
+                    ((MainFragment_) currentFragment).showSearchResults(query);
+                }
 
                 return false;
             }
@@ -45,10 +51,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         searchView.setOnCloseListener(() -> {
-            fragment.showDefaultResults();
+            if (currentFragment instanceof MainFragment_) {
+                ((MainFragment_) currentFragment).showDefaultResults();
+            }
             return false;
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void switchFragment(Fragment fragment) {
+        this.currentFragment = fragment;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activityFragmentRoot, fragment)
+                .commit();
+    }
+
+    private boolean handleBottomNavigationItemSelect(MenuItem item) {
+        Fragment newFragment;
+
+        switch (item.getItemId()) {
+            case R.id.bottomNavigationStocks:
+                newFragment = new MainFragment_();
+                break;
+            default:
+                newFragment = new NewsFragment_();
+                break;
+        }
+
+        switchFragment(newFragment);
+
+        return true;
     }
 }

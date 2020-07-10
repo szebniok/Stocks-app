@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottomNavigationStocks"
+        android:enabled="true"
+        android:icon="@android:drawable/arrow_up_float"
+        android:title="Stocks" />
+    <item
+        android:id="@+id/bottomNavigationNews"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:title="News" />
+</menu>
