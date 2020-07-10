@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.stocks.StockRecyclerViewViewModel" />
+            type="com.example.stocks.stock_recycler.StockRecyclerViewViewModel" />
     </data>
 
     <LinearLayout

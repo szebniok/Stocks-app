@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.stocks.stock_recycler.StockRecyclerViewFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -22,6 +23,10 @@ public class MainFragment extends Fragment {
 
     private FragmentStateAdapter adapter;
 
+    private static StockRecyclerViewFragment viewPagerFragments[] = {
+            StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.SUMMARY),
+            StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.FAVOURITES)
+    };
     private static final String TABS_NAMES[] = {"Summary", "Favourites"};
 
     @AfterViews
@@ -33,6 +38,18 @@ public class MainFragment extends Fragment {
                 tab.setText(TABS_NAMES[position])).attach();
     }
 
+    public void showSearchResults(String query) {
+        StockRecyclerViewFragment currentFragment = viewPagerFragments[viewPager.getCurrentItem()];
+
+        currentFragment.showSearchResults(query);
+    }
+
+    public void showDefaultResults() {
+        StockRecyclerViewFragment currentFragment = viewPagerFragments[viewPager.getCurrentItem()];
+
+        currentFragment.showDefaultResults();
+    }
+
     private class MainActivityFragmentStateAdapter extends FragmentStateAdapter {
         public MainActivityFragmentStateAdapter(FragmentActivity fragmentActivity) {
             super(fragmentActivity);
@@ -40,12 +57,7 @@ public class MainFragment extends Fragment {
 
         @Override
         public Fragment createFragment(int position) {
-            switch(position) {
-                case 0:
-                    return StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.SUMMARY);
-                default:
-                    return StockRecyclerViewFragment.newInstance(StockRecyclerViewFragment.ListType.FAVOURITES);
-            }
+            return viewPagerFragments[position];
         }
 
         @Override

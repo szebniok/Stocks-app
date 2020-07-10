@@ -6,19 +6,21 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
-import com.example.stocks.StockRecyclerViewFragment.ListType;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
+    MainFragment_ fragment;
+
     @AfterViews
     void setup() {
+        fragment = new MainFragment_();
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.activityMainRoot, new MainFragment_(), "mainFragment")
+                .add(R.id.activityMainRoot, fragment, "mainFragment")
                 .commit();
     }
 
@@ -32,20 +34,19 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                StockRecyclerViewFragment_ fragment = StockRecyclerViewFragment.newInstance(ListType.SEARCH, query);
+                fragment.showSearchResults(query);
 
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.activityMainRoot, fragment)
-                        .addToBackStack(null)
-                        .commit();
-
-                return true;
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+        });
+        searchView.setOnCloseListener(() -> {
+            fragment.showDefaultResults();
+            return false;
         });
 
         return super.onCreateOptionsMenu(menu);

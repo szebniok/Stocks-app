@@ -42,7 +42,7 @@ public class StockRecyclerViewViewModel extends ViewModel {
         );
     }
 
-    public void getStocks() {
+    public void getSummary() {
         disposable.add(
                 service.getSummary()
                         .doOnError(Throwable::printStackTrace)
