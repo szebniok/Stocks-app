@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import com.example.stocks.news.NewsRecyclerViewFragment_;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 newFragment = new MainFragment_();
                 break;
             default:
-                newFragment = new NewsFragment_();
+                newFragment = new NewsRecyclerViewFragment_();
                 break;
         }
 

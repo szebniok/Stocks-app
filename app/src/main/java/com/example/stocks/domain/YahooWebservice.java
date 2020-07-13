@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import io.reactivex.Single;
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -25,6 +26,9 @@ public interface YahooWebservice {
 
     @GET
     Single<AutoCompleteResult> autoComplete(@Url String baseUrl, @Query("query") String query, @Query("lang") String lang);
+
+    @GET
+    Single<ResponseBody> getNews(@Url String baseUrl);
 }
 
 

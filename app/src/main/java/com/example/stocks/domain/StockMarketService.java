@@ -2,6 +2,10 @@ package com.example.stocks.domain;
 
 import com.example.stocks.YahooApiProvider;
 import com.example.stocks.domain.ChartsResult.Chart.Result;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import org.androidannotations.annotations.EBean;
 
@@ -64,5 +68,15 @@ public class StockMarketService {
                         .map(r -> r.toStock())
                         .collect(Collectors.toList())
                 );
+    }
+
+    public Single<List<SyndEntry>> getNews() {
+
+        SyndFeedInput syndFeedInput = new SyndFeedInput();
+        return YahooApiProvider.yahooWebservice.getNews("https://feeds.finance.yahoo.com/rss/2.0/headline?s=^GSPC")
+                .map(responseBody -> {
+                    SyndFeed feed = syndFeedInput.build(new XmlReader(responseBody.byteStream()));
+                    return feed.getEntries();
+                });
     }
 }

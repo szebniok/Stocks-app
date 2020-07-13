@@ -26,8 +26,6 @@ import io.reactivex.subjects.BehaviorSubject;
 @DataBound
 @EFragment(R.layout.fragment_stock_recycler_view)
 public class StockRecyclerViewFragment extends Fragment {
-
-
     public enum ListType {
         SUMMARY("SUMMARY"), FAVOURITES("FAVOURITES");
 
