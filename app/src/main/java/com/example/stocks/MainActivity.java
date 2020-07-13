@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     @ViewById(R.id.bottomNavigation)
     BottomNavigationView bottomNavigationView;
 
+    private Menu menu;
+    private MenuItem searchMenuItem;
+
+
     @AfterViews
     void setup() {
         bottomNavigationView.setOnNavigationItemSelectedListener(this::handleBottomNavigationItemSelect);
@@ -31,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+
         getMenuInflater().inflate(R.menu.activity_main_search, menu);
+        searchMenuItem = menu.findItem(R.id.search_icon);
 
-        MenuItem menuItem = menu.findItem(R.id.search_icon);
-
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -75,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.bottomNavigationStocks:
+                showSearchMenuIcon();
                 newFragment = new MainFragment_();
                 break;
             default:
+                hideSearchMenuIcon();
                 newFragment = new NewsRecyclerViewFragment_();
                 break;
         }
@@ -85,5 +92,13 @@ public class MainActivity extends AppCompatActivity {
         switchFragment(newFragment);
 
         return true;
+    }
+
+    private void showSearchMenuIcon() {
+        searchMenuItem.setVisible(true);
+    }
+
+    private void hideSearchMenuIcon() {
+        searchMenuItem.setVisible(false);
     }
 }
