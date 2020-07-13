@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.stocks.R;
 import com.example.stocks.domain.Stock;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
@@ -62,9 +63,16 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
         private void bindStock(Stock stock) {
             TextView symbolTextView = view.findViewById(R.id.stockListItemSymbol);
             TextView shortNameTextView = view.findViewById(R.id.stockListItemShortName);
+            TextView priceTextView = view.findViewById(R.id.stockListItemPrice);
+
+            String formattedPrice =
+                    stock.getRegularMarketPrice() != null ?
+                            stock.getRegularMarketPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
+                            : null;
 
             symbolTextView.setText(stock.getSymbol());
             shortNameTextView.setText(stock.getShortName());
+            priceTextView.setText(formattedPrice);
         }
 
     }
