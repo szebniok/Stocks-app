@@ -14,7 +14,12 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import java.util.List;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder> {
+    private OnNewsListItemClick onNewsListItemClick;
     private List<SyndEntry> entries;
+
+    public NewsRecyclerViewAdapter(OnNewsListItemClick onNewsListItemClick) {
+        this.onNewsListItemClick = onNewsListItemClick;
+    }
 
     @NonNull
     @Override
@@ -39,12 +44,13 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private View view;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
+            view.setOnClickListener(this);
         }
 
         public void bindEntry(SyndEntry entry) {
@@ -54,5 +60,14 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             titleView.setText(entry.getTitle());
             contentView.setText(entry.getDescription().getValue());
         }
+
+        @Override
+        public void onClick(View view) {
+            onNewsListItemClick.handleClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnNewsListItemClick {
+        void handleClick(int position);
     }
 }

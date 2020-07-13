@@ -1,11 +1,15 @@
 package com.example.stocks.news;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stocks.R;
 import com.example.stocks.databinding.FragmentNewsRecyclerViewBinding;
+import com.rometools.rome.feed.synd.SyndEntry;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -34,11 +38,17 @@ public class NewsRecyclerViewFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        adapter = new NewsRecyclerViewAdapter();
+        adapter = new NewsRecyclerViewAdapter(this::handleNewsListItemClick);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         viewModel.getNews();
         viewModel.news.observe(this, adapter::updateNews);
+    }
+
+    private void handleNewsListItemClick(int i) {
+        SyndEntry clickedEntry = viewModel.news.getValue().get(i);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(clickedEntry.getLink()));
+        startActivity(intent);
     }
 }
