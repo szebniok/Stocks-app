@@ -54,6 +54,11 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
             view.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            onStockListItemClick.handleClick(getAdapterPosition());
+        }
+
         private void bindStock(Stock stock) {
             TextView symbolTextView = view.findViewById(R.id.stockListItemSymbol);
             TextView shortNameTextView = view.findViewById(R.id.stockListItemShortName);
@@ -62,15 +67,9 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
             shortNameTextView.setText(stock.getShortName());
         }
 
-        @Override
-        public void onClick(View view) {
-            onStockListItemClick.handleClick(getAdapterPosition());
-        }
     }
 
     public interface OnStockListItemClick {
         void handleClick(int position);
     }
-
-
 }

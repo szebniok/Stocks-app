@@ -16,8 +16,8 @@ import org.androidannotations.annotations.ViewById;
 
 import io.reactivex.subjects.BehaviorSubject;
 
-@EFragment(R.layout.fragment_main)
-public class MainFragment extends Fragment {
+@EFragment(R.layout.fragment_stock)
+public class StockFragment extends Fragment {
     @ViewById(R.id.pager)
     ViewPager2 viewPager;
 

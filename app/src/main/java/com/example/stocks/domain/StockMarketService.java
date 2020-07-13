@@ -18,6 +18,9 @@ import io.reactivex.Single;
 
 @EBean
 public class StockMarketService {
+    private static final String INTERVAL = "5m";
+    private static final String RANGE = "1d";
+
     public Single<List<Stock>> getSummary() {
         return YahooApiProvider.yahooWebservice
                 .getSummary()
@@ -45,7 +48,7 @@ public class StockMarketService {
     }
 
     public Single<List<Stock>> getQuotes(List<String> symbols) {
-        if (symbols.size() == 0) {
+        if (symbols.isEmpty()) {
             return Single.just(new ArrayList<>());
         }
 
@@ -57,13 +60,8 @@ public class StockMarketService {
                 );
     }
 
-    private Single<Result> getChart(String symbol) {
-        return YahooApiProvider.yahooWebservice.getCharts(symbol, "5m", "1d")
-                .map(result -> result.chart.result.get(0));
-    }
-
     public Single<List<Stock>> autoComplete(String name) {
-        return YahooApiProvider.yahooWebservice.autoComplete("https://autoc.finance.yahoo.com/autoc", name, "en")
+        return YahooApiProvider.yahooWebservice.autocomplete(YahooApiProvider.AUTOCOMPLETE_URL, name, "en")
                 .map(result -> result.ResultSet.Result.stream()
                         .map(r -> r.toStock())
                         .collect(Collectors.toList())
@@ -73,10 +71,16 @@ public class StockMarketService {
     public Single<List<SyndEntry>> getNews() {
 
         SyndFeedInput syndFeedInput = new SyndFeedInput();
-        return YahooApiProvider.yahooWebservice.getNews("https://feeds.finance.yahoo.com/rss/2.0/headline?s=^GSPC")
+        return YahooApiProvider.yahooWebservice.getNews(YahooApiProvider.NEWS_URL)
                 .map(responseBody -> {
                     SyndFeed feed = syndFeedInput.build(new XmlReader(responseBody.byteStream()));
                     return feed.getEntries();
                 });
     }
+
+    private Single<Result> getChart(String symbol) {
+        return YahooApiProvider.yahooWebservice.getCharts(symbol, INTERVAL, RANGE)
+                .map(result -> result.chart.result.get(0));
+    }
+
 }

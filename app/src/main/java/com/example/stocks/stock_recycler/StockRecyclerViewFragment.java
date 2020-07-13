@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.stocks.R;
 import com.example.stocks.databinding.FragmentStockRecyclerViewBinding;
 import com.example.stocks.domain.Stock;
+import com.example.stocks.stock_details.StockDetailsActivity;
 import com.example.stocks.stock_details.StockDetailsActivity_;
 
 import org.androidannotations.annotations.AfterViews;
@@ -84,7 +85,7 @@ public class StockRecyclerViewFragment extends Fragment {
 
     public void handleClick(int position) {
         Intent intent = new Intent(getActivity(), StockDetailsActivity_.class);
-        intent.putExtra("symbol", stocks.get(position).getSymbol());
+        intent.putExtra(StockDetailsActivity.SYMBOL, stocks.get(position).getSymbol());
         startActivity(intent);
     }
 

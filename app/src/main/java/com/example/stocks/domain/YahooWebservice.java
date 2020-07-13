@@ -25,7 +25,7 @@ public interface YahooWebservice {
     );
 
     @GET
-    Single<AutoCompleteResult> autoComplete(@Url String baseUrl, @Query("query") String query, @Query("lang") String lang);
+    Single<AutoCompleteResult> autocomplete(@Url String baseUrl, @Query("query") String query, @Query("lang") String lang);
 
     @GET
     Single<ResponseBody> getNews(@Url String baseUrl);

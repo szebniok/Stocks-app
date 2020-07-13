@@ -45,7 +45,6 @@ public class StockRecyclerViewViewModel extends ViewModel {
     public void getSummary() {
         disposable.add(
                 service.getSummary()
-                        .doOnError(Throwable::printStackTrace)
                         .doOnSubscribe(v -> loading.postValue(true))
                         .doAfterSuccess(v -> loading.postValue(false))
                         .subscribeOn(Schedulers.io())

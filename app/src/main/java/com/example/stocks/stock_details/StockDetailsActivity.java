@@ -24,6 +24,7 @@ import java.util.List;
 @EActivity(R.layout.fragment_stock_details)
 @DataBound
 public class StockDetailsActivity extends AppCompatActivity {
+    public static final String SYMBOL = "SYMBOL";
 
     @BindingObject
     FragmentStockDetailsBinding binding;
@@ -39,12 +40,10 @@ public class StockDetailsActivity extends AppCompatActivity {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        String symbol = getIntent().getStringExtra("symbol");
+        String symbol = getIntent().getStringExtra(SYMBOL);
         viewModel.getQuoteAndChart(symbol);
 
-        viewModel.stock.observe(this, stock -> {
-            createChart(stock);
-        });
+        viewModel.stock.observe(this, this::createChart);
     }
 
     private void createChart(Stock stock) {

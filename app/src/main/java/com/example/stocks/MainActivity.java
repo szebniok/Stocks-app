@@ -22,21 +22,17 @@ public class MainActivity extends AppCompatActivity {
     @ViewById(R.id.bottomNavigation)
     BottomNavigationView bottomNavigationView;
 
-    private Menu menu;
     private MenuItem searchMenuItem;
-
 
     @AfterViews
     void setup() {
         bottomNavigationView.setOnNavigationItemSelectedListener(this::handleBottomNavigationItemSelect);
 
-        switchFragment(new MainFragment_());
+        switchFragment(new StockFragment_());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
-
         getMenuInflater().inflate(R.menu.activity_main_search, menu);
         searchMenuItem = menu.findItem(R.id.search_icon);
 
@@ -44,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (currentFragment instanceof MainFragment_) {
-                    ((MainFragment_) currentFragment).showSearchResults(query);
+                if (currentFragment instanceof StockFragment_) {
+                    ((StockFragment_) currentFragment).showSearchResults(query);
                 }
 
                 return false;
@@ -57,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         searchView.setOnCloseListener(() -> {
-            if (currentFragment instanceof MainFragment_) {
-                ((MainFragment_) currentFragment).showDefaultResults();
+            if (currentFragment instanceof StockFragment_) {
+                ((StockFragment_) currentFragment).showDefaultResults();
             }
             return false;
         });
@@ -81,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.bottomNavigationStocks:
                 showSearchMenuIcon();
-                newFragment = new MainFragment_();
+                newFragment = new StockFragment_();
                 break;
             default:
                 hideSearchMenuIcon();
