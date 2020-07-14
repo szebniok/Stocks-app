@@ -2,7 +2,9 @@ package com.example.stocks.stock_recycler;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,11 +71,14 @@ public class StockRecyclerViewFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        setupItemSwipeHandler();
+
         showDefaultResults();
 
         viewModel.stocks.observe(this, this::updateStocks);
         searchSubject.subscribe(this::handleSearchTextChange);
     }
+
 
     @Override
     public void onResume() {
@@ -138,5 +143,34 @@ public class StockRecyclerViewFragment extends Fragment {
                 .stream()
                 .filter(stock -> stock.getShortName().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    private void setupItemSwipeHandler() {
+        int swipeDirection = type == ListType.SUMMARY ? ItemTouchHelper.RIGHT : ItemTouchHelper.LEFT;
+
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, swipeDirection) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Stock swipedStock = stocks.get(viewHolder.getAdapterPosition());
+                viewModel.toggleFavourites(swipedStock.getSymbol());
+
+                // we need to notify the adapter to get the swiped item to restore its original position
+                // we only want to restore original position when we are in 'summary' view
+                // https://stackoverflow.com/a/32159154
+                if (type == ListType.SUMMARY) {
+                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                } else {
+                    stocks.remove(viewHolder.getAdapterPosition());
+                    adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                }
+            }
+        };
+
+        new ItemTouchHelper(swipeCallback).attachToRecyclerView(recyclerView);
     }
 }

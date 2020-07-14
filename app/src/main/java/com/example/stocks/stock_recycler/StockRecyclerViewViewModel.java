@@ -64,6 +64,10 @@ public class StockRecyclerViewViewModel extends ViewModel {
         );
     }
 
+    public void toggleFavourites(String symbol) {
+        preferencesService.toggleFavouriteStatus(symbol);
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
