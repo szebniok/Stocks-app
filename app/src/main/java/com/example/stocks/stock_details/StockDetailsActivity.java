@@ -3,7 +3,7 @@ package com.example.stocks.stock_details;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.stocks.R;
-import com.example.stocks.databinding.FragmentStockDetailsBinding;
+import com.example.stocks.databinding.ActivityStockDetailsBinding;
 import com.example.stocks.domain.Stock;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -21,13 +21,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@EActivity(R.layout.fragment_stock_details)
+@EActivity(R.layout.activity_stock_details)
 @DataBound
 public class StockDetailsActivity extends AppCompatActivity {
     public static final String SYMBOL = "SYMBOL";
 
     @BindingObject
-    FragmentStockDetailsBinding binding;
+    ActivityStockDetailsBinding binding;
 
     @Bean
     StockDetailsViewModel viewModel;
