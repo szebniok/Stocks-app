@@ -57,12 +57,19 @@ public class StockDetailsActivity extends AppCompatActivity {
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "price");
-        dataSet.setColor(R.color.colorPrimaryDark);
+        dataSet.setLineWidth(3);
+        dataSet.setDrawCircles(false);
+        dataSet.setDrawFilled(true);
 
         LineData lineData = new LineData(dataSet);
         lineData.setDrawValues(false);
 
         chart.setData(lineData);
+        chart.getDescription().setEnabled(false);
+        chart.getLegend().setEnabled(false);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setDrawAxisLine(false);
+        chart.getXAxis().setDrawLabels(false);
         chart.invalidate();
     }
 }
