@@ -20,10 +20,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stockRecyclerView"
+            style="@style/RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="4dp"
-            android:background="#F0F0F0"
             android:visibility="@{!viewModel.loading}" />
     </LinearLayout>
 </layout>

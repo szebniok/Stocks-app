@@ -6,5 +6,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="RecyclerView">
+        <item name="android:background">#F0F0F0</item>
+        <item name="android:paddingTop">4dp</item>
+    </style>
+    <style name="RecyclerViewItem">
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:background">@color/design_default_color_on_primary</item>
+        <item name="android:padding">6dp</item>
+    </style>
 </resources>

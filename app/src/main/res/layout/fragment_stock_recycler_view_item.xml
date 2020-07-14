@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RecyclerViewItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginBottom="4dp"
-    android:background="@color/design_default_color_on_primary"
-    android:padding="6dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -17,13 +13,14 @@
 
         <TextView
             android:id="@+id/stockListItemSymbol"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             tools:text="^GSPC" />
 
         <TextView
             android:id="@+id/stockListItemShortName"
+            style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="S&amp;P 500" />
@@ -35,5 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:textAlignment="textEnd"
-        tools:text="3100.09"/>
+        android:textSize="16sp"
+        tools:text="3100.09" />
 </LinearLayout>
