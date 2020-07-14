@@ -4,6 +4,7 @@ package com.example.stocks.stock_recycler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,6 +65,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
             TextView symbolTextView = view.findViewById(R.id.stockListItemSymbol);
             TextView shortNameTextView = view.findViewById(R.id.stockListItemShortName);
             TextView priceTextView = view.findViewById(R.id.stockListItemPrice);
+            ImageView star = view.findViewById(R.id.stockListItemStar);
 
             String formattedPrice =
                     stock.getRegularMarketPrice() != null ?
@@ -73,6 +75,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
             symbolTextView.setText(stock.getSymbol());
             shortNameTextView.setText(stock.getShortName());
             priceTextView.setText(formattedPrice);
+            star.setVisibility(stock.getFavourite() ? View.VISIBLE : View.GONE);
         }
 
     }

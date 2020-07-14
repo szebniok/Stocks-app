@@ -11,4 +11,5 @@ public class Stock {
     private String shortName;
     private BigDecimal regularMarketPrice;
     private List<BigDecimal> timestamps;
+    private Boolean favourite;
 }

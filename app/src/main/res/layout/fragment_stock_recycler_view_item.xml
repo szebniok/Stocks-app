@@ -26,12 +26,27 @@
             tools:text="S&amp;P 500" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/stockListItemPrice"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="20"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        tools:text="3100.09" />
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/stockListItemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            tools:text="3100.09" />
+
+        <ImageView
+            android:id="@+id/stockListItemStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/star_on"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
 </LinearLayout>

@@ -156,17 +156,18 @@ public class StockRecyclerViewFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                Stock swipedStock = stocks.get(viewHolder.getAdapterPosition());
-                viewModel.toggleFavourites(swipedStock.getSymbol());
+                int position = viewHolder.getAdapterPosition();
+                Stock swipedStock = stocks.get(position);
+                viewModel.toggleFavourites(swipedStock);
 
                 // we need to notify the adapter to get the swiped item to restore its original position
                 // we only want to restore original position when we are in 'summary' view
                 // https://stackoverflow.com/a/32159154
                 if (type == ListType.SUMMARY) {
-                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    adapter.notifyItemChanged(position);
                 } else {
-                    stocks.remove(viewHolder.getAdapterPosition());
-                    adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    stocks.remove(position);
+                    adapter.notifyItemRemoved(position);
                 }
             }
         };

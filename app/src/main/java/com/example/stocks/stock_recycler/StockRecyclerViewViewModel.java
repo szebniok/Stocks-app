@@ -11,6 +11,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -36,6 +37,10 @@ public class StockRecyclerViewViewModel extends ViewModel {
                 service.getQuotes(favourites)
                         .doOnSubscribe(v -> loading.postValue(true))
                         .doOnSuccess(v -> loading.postValue(false))
+                        .map(stocks -> stocks.stream().map(s -> {
+                            s.setFavourite(true);
+                            return s;
+                        }).collect(Collectors.toList()))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(quotes -> stocks.postValue(quotes))
@@ -47,6 +52,10 @@ public class StockRecyclerViewViewModel extends ViewModel {
                 service.getSummary()
                         .doOnSubscribe(v -> loading.postValue(true))
                         .doAfterSuccess(v -> loading.postValue(false))
+                        .map(stocks -> stocks.stream().map(s -> {
+                            s.setFavourite(preferencesService.isFavourite(s.getSymbol()));
+                            return s;
+                        }).collect(Collectors.toList()))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(data -> stocks.postValue(data))
@@ -64,8 +73,9 @@ public class StockRecyclerViewViewModel extends ViewModel {
         );
     }
 
-    public void toggleFavourites(String symbol) {
-        preferencesService.toggleFavouriteStatus(symbol);
+    public void toggleFavourites(Stock stock) {
+        preferencesService.toggleFavouriteStatus(stock.getSymbol());
+        stock.setFavourite(preferencesService.isFavourite(stock.getSymbol()));
     }
 
     @Override
