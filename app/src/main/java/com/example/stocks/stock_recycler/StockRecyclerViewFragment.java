@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.reactivex.subjects.BehaviorSubject;
+import lombok.Setter;
 
 @DataBound
 @EFragment(R.layout.fragment_stock_recycler_view)
@@ -52,7 +53,9 @@ public class StockRecyclerViewFragment extends Fragment {
     private List<Stock> originalStocks;
     private StockRecyclerViewAdapter adapter;
 
+    @Setter
     private ListType type;
+    @Setter
     private BehaviorSubject<String> searchSubject;
 
     public static StockRecyclerViewFragment_ newInstance(ListType type, BehaviorSubject<String> searchSubject) {
@@ -64,6 +67,8 @@ public class StockRecyclerViewFragment extends Fragment {
 
     @AfterViews
     void setup() {
+        setRetainInstance(true);
+
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
@@ -92,14 +97,6 @@ public class StockRecyclerViewFragment extends Fragment {
         Intent intent = new Intent(getActivity(), StockDetailsActivity_.class);
         intent.putExtra(StockDetailsActivity.SYMBOL, stocks.get(position).getSymbol());
         startActivity(intent);
-    }
-
-    public void setType(ListType type) {
-        this.type = type;
-    }
-
-    public void setSearchSubject(BehaviorSubject<String> searchSubject) {
-        this.searchSubject = searchSubject;
     }
 
     private void showDefaultResults() {

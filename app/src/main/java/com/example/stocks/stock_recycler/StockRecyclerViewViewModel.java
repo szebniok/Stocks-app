@@ -67,6 +67,10 @@ public class StockRecyclerViewViewModel extends ViewModel {
                 service.autoComplete(name)
                         .doOnSubscribe(v -> loading.postValue(true))
                         .doAfterSuccess(v -> loading.postValue(false))
+                        .map(stocks -> stocks.stream().map(s -> {
+                            s.setFavourite(preferencesService.isFavourite(s.getSymbol()));
+                            return s;
+                        }).collect(Collectors.toList()))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(s -> stocks.postValue(s))
