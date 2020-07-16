@@ -104,7 +104,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
 
         @Override
         public int getNewListSize() {
-            return newList.size();
+            return newList != null ? newList.size() : 0;
         }
 
         @Override
@@ -127,6 +127,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
             TextView newPriceTextView = newHolder.itemView.findViewById(R.id.stockListItemPrice);
 
             if (oldPriceTextView.getText().toString().equals("")) return false;
+            if (newPriceTextView.getText().toString().equals("")) return false;
 
             BigDecimal oldPrice = new BigDecimal(oldPriceTextView.getText().toString());
             BigDecimal newPrice = new BigDecimal(newPriceTextView.getText().toString());

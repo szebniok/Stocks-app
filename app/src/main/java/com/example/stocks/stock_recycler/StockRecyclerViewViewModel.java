@@ -41,17 +41,16 @@ public class StockRecyclerViewViewModel extends ViewModel {
 
         List<String> favourites = preferencesService.getFavouriteSymbols();
 
-        pendingSubscription =
-                service.getQuotes(favourites)
-                        .doOnSubscribe(v -> loading.postValue(true))
-                        .doOnSuccess(v -> loading.postValue(false))
-                        .map(stocks -> stocks.stream().map(s -> {
-                            s.setFavourite(true);
-                            return s;
-                        }).collect(Collectors.toList()))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(quotes -> stocks.postValue(quotes));
+        pendingSubscription = refreshTicks.flatMap(tick -> service.getQuotes(favourites).toObservable())
+                .doOnSubscribe(v -> loading.postValue(true))
+                .doAfterNext(v -> loading.postValue(false))
+                .map(stocks -> stocks.stream().map(s -> {
+                    s.setFavourite(true);
+                    return s;
+                }).collect(Collectors.toList()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(quotes -> stocks.postValue(quotes));
 
         disposable.add(pendingSubscription);
     }
@@ -76,17 +75,16 @@ public class StockRecyclerViewViewModel extends ViewModel {
     public void search(String name) {
         cancelPendingSubscription();
 
-        pendingSubscription =
-                service.autoComplete(name)
-                        .doOnSubscribe(v -> loading.postValue(true))
-                        .doAfterSuccess(v -> loading.postValue(false))
-                        .map(stocks -> stocks.stream().map(s -> {
-                            s.setFavourite(preferencesService.isFavourite(s.getSymbol()));
-                            return s;
-                        }).collect(Collectors.toList()))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(s -> stocks.postValue(s));
+        pendingSubscription = service.autoComplete(name)
+                .doOnSubscribe(v -> loading.postValue(true))
+                .doAfterSuccess(v -> loading.postValue(false))
+                .map(stocks -> stocks.stream().map(s -> {
+                    s.setFavourite(preferencesService.isFavourite(s.getSymbol()));
+                    return s;
+                }).collect(Collectors.toList()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> stocks.postValue(s));
 
         disposable.add(pendingSubscription);
     }
