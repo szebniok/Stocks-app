@@ -75,10 +75,9 @@ public class StockRecyclerViewFragment extends Fragment {
         adapter = new StockRecyclerViewAdapter(this::handleClick);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setItemAnimator(new StockRecyclerViewAdapter.ItemAnimator());
 
         setupItemSwipeHandler();
-
-        showDefaultResults();
 
         viewModel.stocks.observe(this, this::updateStocks);
         searchSubject.subscribe(this::handleSearchTextChange);

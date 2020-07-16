@@ -11,10 +11,13 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @EBean
@@ -29,11 +32,16 @@ public class StockRecyclerViewViewModel extends ViewModel {
     PreferencesService preferencesService;
 
     private CompositeDisposable disposable = new CompositeDisposable();
+    private Observable<Long> refreshTicks = Observable.interval(10, TimeUnit.SECONDS).startWith(1L);
+
+    private Disposable pendingSubscription;
 
     void getFavourites() {
+        cancelPendingSubscription();
+
         List<String> favourites = preferencesService.getFavouriteSymbols();
 
-        disposable.add(
+        pendingSubscription =
                 service.getQuotes(favourites)
                         .doOnSubscribe(v -> loading.postValue(true))
                         .doOnSuccess(v -> loading.postValue(false))
@@ -43,27 +51,32 @@ public class StockRecyclerViewViewModel extends ViewModel {
                         }).collect(Collectors.toList()))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(quotes -> stocks.postValue(quotes))
-        );
+                        .subscribe(quotes -> stocks.postValue(quotes));
+
+        disposable.add(pendingSubscription);
     }
 
     public void getSummary() {
-        disposable.add(
-                service.getSummary()
-                        .doOnSubscribe(v -> loading.postValue(true))
-                        .doAfterSuccess(v -> loading.postValue(false))
-                        .map(stocks -> stocks.stream().map(s -> {
-                            s.setFavourite(preferencesService.isFavourite(s.getSymbol()));
-                            return s;
-                        }).collect(Collectors.toList()))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(data -> stocks.postValue(data))
-        );
+        cancelPendingSubscription();
+
+        pendingSubscription = refreshTicks.flatMap(tick -> service.getSummary().toObservable())
+                .doOnSubscribe(v -> loading.postValue(true))
+                .doAfterNext(v -> loading.postValue(false))
+                .map(stocks -> stocks.stream().map(s -> {
+                    s.setFavourite(preferencesService.isFavourite(s.getSymbol()));
+                    return s;
+                }).collect(Collectors.toList()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data -> stocks.postValue(data));
+
+        disposable.add(pendingSubscription);
     }
 
     public void search(String name) {
-        disposable.add(
+        cancelPendingSubscription();
+
+        pendingSubscription =
                 service.autoComplete(name)
                         .doOnSubscribe(v -> loading.postValue(true))
                         .doAfterSuccess(v -> loading.postValue(false))
@@ -73,8 +86,9 @@ public class StockRecyclerViewViewModel extends ViewModel {
                         }).collect(Collectors.toList()))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(s -> stocks.postValue(s))
-        );
+                        .subscribe(s -> stocks.postValue(s));
+
+        disposable.add(pendingSubscription);
     }
 
     public void toggleFavourites(Stock stock) {
@@ -86,5 +100,11 @@ public class StockRecyclerViewViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         disposable.dispose();
+    }
+
+    private void cancelPendingSubscription() {
+        if (pendingSubscription != null) {
+            pendingSubscription.dispose();
+        }
     }
 }
