@@ -10,4 +10,9 @@
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_alert"
         android:title="News" />
+    <item
+        android:id="@+id/bottomNavigationSettings"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Settings" />
 </menu>

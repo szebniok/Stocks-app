@@ -79,10 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 showSearchMenuIcon();
                 newFragment = new StockFragment_();
                 break;
-            default:
+            case R.id.bottomNavigationNews:
                 hideSearchMenuIcon();
                 newFragment = new NewsRecyclerViewFragment_();
                 break;
+            default:
+                hideSearchMenuIcon();
+                newFragment = new SettingsFragment_();
         }
 
         switchFragment(newFragment);
