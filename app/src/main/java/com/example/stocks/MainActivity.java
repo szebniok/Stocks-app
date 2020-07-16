@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.example.stocks.news.NewsRecyclerViewFragment_;
+import com.example.stocks.settings.SettingsFragment_;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.androidannotations.annotations.AfterViews;

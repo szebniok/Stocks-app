@@ -7,6 +7,7 @@ import com.example.stocks.domain.PreferencesService;
 import com.example.stocks.domain.Stock;
 import com.example.stocks.domain.StockMarketService;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
@@ -32,9 +33,13 @@ public class StockRecyclerViewViewModel extends ViewModel {
     PreferencesService preferencesService;
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    private Observable<Long> refreshTicks = Observable.interval(10, TimeUnit.SECONDS).startWith(1L);
-
+    private Observable<Long> refreshTicks;
     private Disposable pendingSubscription;
+
+    @AfterInject
+    void setup() {
+        refreshTicks = Observable.interval(preferencesService.getRefreshRateInSeconds(), TimeUnit.SECONDS).startWith(0L);
+    }
 
     void getFavourites() {
         cancelPendingSubscription();

@@ -6,4 +6,6 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 public interface Preferences {
     // favourite symbols separated by commas
     String favouriteSymbols();
+
+    int refreshRate();
 }

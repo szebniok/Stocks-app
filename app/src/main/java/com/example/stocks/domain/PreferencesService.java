@@ -10,6 +10,8 @@ import java.util.List;
 @EBean
 public class PreferencesService {
 
+    private static final int[] REFRESH_RATES = {5, 10, 30, 60, 60 * 5};
+
     @Pref
     Preferences_ preferences;
 
@@ -35,6 +37,18 @@ public class PreferencesService {
             return new ArrayList<>();
         }
         return new ArrayList<>(Arrays.asList(joinedFavouriteSymbols.split(",")));
+    }
+
+    public int getRefreshRatePreferenceIndex() {
+        return preferences.refreshRate().getOr(1);
+    }
+
+    public void setRefreshRatePreferenceIndex(int index) {
+        preferences.refreshRate().put(index);
+    }
+
+    public int getRefreshRateInSeconds() {
+        return REFRESH_RATES[getRefreshRatePreferenceIndex()];
     }
 
     private void saveFavouriteSymbols(List<String> favourites) {
