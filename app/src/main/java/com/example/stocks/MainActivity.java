@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import com.example.stocks.dashboard.DashboardFragment_;
 import com.example.stocks.news.NewsRecyclerViewFragment_;
 import com.example.stocks.settings.SettingsFragment_;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     void setup() {
         bottomNavigationView.setOnNavigationItemSelectedListener(this::handleBottomNavigationItemSelect);
 
-        switchFragment(new StockFragment_());
+        switchFragment(new DashboardFragment_());
     }
 
     @Override
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         Fragment newFragment;
 
         switch (item.getItemId()) {
+            case R.id.bottomNavigationDashboard:
+                showSearchMenuIcon();
+                newFragment = new DashboardFragment_();
+                break;
             case R.id.bottomNavigationStocks:
                 showSearchMenuIcon();
                 newFragment = new StockFragment_();
